@@ -1,15 +1,14 @@
 import sys
-
-sys.dont_write_bytecode = True
-
+from colorama import Fore, Style
+from colorama import init
 from smart_airdrop_claimer import base
 from core.token import get_token
 from core.info import get_info
 from core.game import process_play_game
-
 import time
 import json
-
+init(autoreset=True)
+sys.dont_write_bytecode = True
 
 class Moonbix:
     def __init__(self):
