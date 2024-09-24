@@ -1,1 +1,2 @@
 smart-airdrop-claimer
+pycryptodome
