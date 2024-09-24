@@ -1,5 +1,4 @@
 import sys
-from colorama import init, Fore, Style
 
 sys.dont_write_bytecode = True
 
