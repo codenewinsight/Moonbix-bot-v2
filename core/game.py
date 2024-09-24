@@ -4,6 +4,7 @@ import time
 from smart_airdrop_claimer import base
 from core.headers import headers
 from core.info import get_info
+from core.combination import get_game_data
 
 
 def start_game(token, proxies=None):
@@ -22,25 +23,6 @@ def start_game(token, proxies=None):
         return data
     except:
         return None
-
-
-def play_game(start_game_data, proxies=None):
-    url = "https://moonbix-server-9r08ifrt4-scriptvips-projects.vercel.app/moonbix/api/v1/play"
-    payload = {"game_response": start_game_data}
-
-    try:
-        response = requests.get(
-            url=url,
-            json=payload,
-            proxies=proxies,
-            timeout=20,
-        )
-        data = response.json()
-        payload = data["game"]["payload"]
-        point = data["game"]["log"]
-        return payload, point
-    except:
-        return None, None
 
 
 def complete_game(token, payload, point, proxies=None):
@@ -72,7 +54,7 @@ def process_play_game(token, proxies=None):
         start_game_code = start_game_data["code"]
 
         if start_game_code == "000000":
-            payload, point = play_game(start_game_data=start_game_data, proxies=proxies)
+            payload, point = get_game_data(game_response=start_game_data)
             if payload:
                 base.log(f"{base.yellow}Playing for 45 seconds...")
                 time.sleep(45)
@@ -80,9 +62,7 @@ def process_play_game(token, proxies=None):
                     token=token, payload=payload, point=point, proxies=proxies
                 )
                 if complete_game_status:
-                    base.log(
-                        f"{base.white}Auto Play Game: {base.green}Success | Added {point} points"
-                    )
+                    base.log(f"{base.white}Auto Play Game: {base.green}Success")
                     get_info(token=token, proxies=proxies)
                     time.sleep(1)
                 else:
